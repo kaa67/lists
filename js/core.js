@@ -30,6 +30,17 @@
 
 // localStorage.store = JSON.stringify(store)
 
+const categoryItemMOCK = {
+  title: "Оборудование",
+  items: [
+    'Микроскопы',
+    'Пулеметы',
+    'Водомёты',
+    'Коллайдеры',
+    'Лом',
+  ]
+}
+
 if (!localStorage.store) {
   localStorage.store = JSON.stringify({
     list: [],
@@ -107,16 +118,7 @@ function contentGenerate () {
 }
 
 function addCategory() {
-  store.list.push({
-    title: "Оборудование",
-    items: [
-      'Микроскопы',
-      'Пулеметы',
-      'Водомёты',
-      'Коллайдеры',
-      'Лом',
-    ]
-  })
+  store.list.push(categoryItemMOCK)
 
   store.listIndex = store.list.length - 1
 
