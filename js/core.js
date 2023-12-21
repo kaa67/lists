@@ -30,6 +30,17 @@
 
 // localStorage.store = JSON.stringify(store)
 
+const categoryItemMOCK = {
+  title: "Оборудование",
+  items: [
+    'Микроскопы',
+    'Пулеметы',
+    'Водомёты',
+    'Коллайдеры',
+    'Лом',
+  ]
+}
+
 if (!localStorage.store) {
   localStorage.store = JSON.stringify({
     list: [],
@@ -44,13 +55,17 @@ document.addEventListener("DOMContentLoaded", init)
 addCategoryBtn.addEventListener("click", addCategory)
 
 function init () {
+  refresh()
+}
+
+function refresh () {
   listGenerate()
   contentGenerate()
 }
 
 function listGenerate () {
   const wrapper = document.querySelector('#listWrapper')
-  wrapper.innerHtml = ''
+  clear(wrapper)
 
   if (!store.list.length) {
     return
@@ -76,7 +91,7 @@ function listGenerate () {
 
 function contentGenerate () {
   const wrapper = document.querySelector('#contentWrapper')
-  listWrapper.innerHtml = ''
+  clear(wrapper)
 
   if (store.listIndex === null || !store.list[store.listIndex]) {
     return;
@@ -103,5 +118,15 @@ function contentGenerate () {
 }
 
 function addCategory() {
-  alert('WOW!')
+  store.list.push(categoryItemMOCK)
+
+  store.listIndex = store.list.length - 1
+
+  refresh()
+}
+
+function clear(element) {
+  while(element.firstElementChild) {
+     element.firstElementChild.remove();
+  }
 }
