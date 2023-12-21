@@ -38,8 +38,10 @@ if (!localStorage.store) {
 }
 
 const store = JSON.parse(localStorage.store)
+const addCategoryBtn = document.querySelector('#addCategoryBtn')
 
 document.addEventListener("DOMContentLoaded", init)
+addCategoryBtn.addEventListener("click", addCategory)
 
 function init () {
   listGenerate()
@@ -98,4 +100,8 @@ function contentGenerate () {
   });
 
   wrapper.appendChild(ul)
+}
+
+function addCategory() {
+  alert('WOW!')
 }
