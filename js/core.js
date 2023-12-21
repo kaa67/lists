@@ -44,6 +44,10 @@ document.addEventListener("DOMContentLoaded", init)
 addCategoryBtn.addEventListener("click", addCategory)
 
 function init () {
+  refresh()
+}
+
+function refresh () {
   listGenerate()
   contentGenerate()
 }
@@ -103,5 +107,18 @@ function contentGenerate () {
 }
 
 function addCategory() {
-  alert('WOW!')
+  store.list.push({
+    title: "Оборудование",
+    items: [
+      'Микроскопы',
+      'Пулеметы',
+      'Водомёты',
+      'Коллайдеры',
+      'Лом',
+    ]
+  })
+
+  store.listIndex = store.list.length - 1
+
+  refresh()
 }
