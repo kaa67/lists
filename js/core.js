@@ -54,7 +54,7 @@ function refresh () {
 
 function listGenerate () {
   const wrapper = document.querySelector('#listWrapper')
-  wrapper.innerHtml = ''
+  clear(wrapper)
 
   if (!store.list.length) {
     return
@@ -80,7 +80,7 @@ function listGenerate () {
 
 function contentGenerate () {
   const wrapper = document.querySelector('#contentWrapper')
-  listWrapper.innerHtml = ''
+  clear(wrapper)
 
   if (store.listIndex === null || !store.list[store.listIndex]) {
     return;
@@ -121,4 +121,10 @@ function addCategory() {
   store.listIndex = store.list.length - 1
 
   refresh()
+}
+
+function clear(element) {
+  while(element.firstElementChild) {
+     element.firstElementChild.remove();
+  }
 }
