@@ -1,34 +1,7 @@
-// type ListItem = {
+// type Category = {
 //   title: string
 //   items: string[]
 // }
-
-// const store = {
-//   list: [
-//     {
-//       title: "Оборудование",
-//       items: [
-//         'Микроскопы',
-//         'Пулеметы',
-//         'Водомёты',
-//         'Коллайдеры',
-//         'Лом',
-//       ]
-//     },
-//     {
-//       title: "Транспорт",
-//       items: [
-//         'Машины',
-//         'Велики',
-//         'Самолеты',
-//         'Пешком',
-//       ]
-//     },
-//   ], // ListItem[]
-//   listIndex: 0, // null | number
-// }
-
-// localStorage.store = JSON.stringify(store)
 
 const categoryItemMOCK = {
   title: "Оборудование",
@@ -41,17 +14,28 @@ const categoryItemMOCK = {
   ]
 }
 
-if (!localStorage.store) {
-  localStorage.store = JSON.stringify({
-    list: [],
-    listIndex: null,
-  })
+const initialStore = {
+  categories: [], // Category[]
+  categoryIndex: null // null || number
 }
 
-const store = JSON.parse(localStorage.store)
-const addCategoryBtn = document.querySelector('#addCategoryBtn')
+if (!localStorage.getItem('store')) {
+  localStorage.setItem(
+    'store',
+    JSON.stringify(initialStore)
+  )
+}
 
-document.addEventListener("DOMContentLoaded", init)
+// Глобальное хранилище
+const store = JSON.parse(localStorage.getItem('store'))
+
+// Валидация и корректировка стора
+if (!store?.categories?.length) {
+  store.categories = []
+  store.categoryIndex = null
+}
+
+const addCategoryBtn = document.querySelector('#addCategoryBtn')
 addCategoryBtn.addEventListener("click", addCategory)
 
 function init () {
@@ -59,45 +43,55 @@ function init () {
 }
 
 function refresh () {
-  listGenerate()
-  contentGenerate()
+  categoriesRefresh()
+  itemsRefresh()
 }
 
-function listGenerate () {
-  const wrapper = document.querySelector('#listWrapper')
+function categoriesRefresh () {
+  const wrapper = document.querySelector('#categoriesWrapper')
   clear(wrapper)
 
-  if (!store.list.length) {
+  const { categories, categoryIndex } = store
+
+  if (!categories.length) {
     return
   }
 
   const ul = document.createElement('ul')
   ul.classList.add('list-group')
 
-  store.list.forEach((item, index) => {
+  categories.forEach((category, index) => {
     const li = document.createElement('li')
     li.classList.add('list-group-item')
 
-    if (index === store.listIndex) {
+    if (index === categoryIndex) {
       li.classList.add('active')
     }
 
-    li.textContent = item.title
+    li.textContent = category.title
     ul.appendChild(li)
-  });
+  })
 
   wrapper.appendChild(ul)
 }
 
-function contentGenerate () {
-  const wrapper = document.querySelector('#contentWrapper')
+function itemsRefresh () {
+  const wrapper = document.querySelector('#itemsWrapper')
   clear(wrapper)
 
-  if (store.listIndex === null || !store.list[store.listIndex]) {
-    return;
+  const { categories, categoryIndex } = store
+
+  if (categoryIndex === null) {
+    return
   }
 
-  const { title, items } = store.list[store.listIndex]
+  const category = categories[categoryIndex]
+
+  if (!category) {
+    return
+  }
+
+  const { title, items } = category
 
   const h3 = document.createElement('h3')
   h3.innerHTML = title
@@ -112,15 +106,14 @@ function contentGenerate () {
 
     li.textContent = item
     ul.appendChild(li)
-  });
+  })
 
   wrapper.appendChild(ul)
 }
 
 function addCategory() {
-  store.list.push(categoryItemMOCK)
-
-  store.listIndex = store.list.length - 1
+  store.categories.push(categoryItemMOCK)
+  store.categoryIndex = store.categories.length - 1
 
   refresh()
 }
