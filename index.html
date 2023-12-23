@@ -59,7 +59,12 @@
     <div class="row">
       <div class="col">
         <h1>Список списков</h1>
-        <button id="addCategoryBtn" class="btn btn-sm btn-success">Добавить</button>
+        <div class="d-flex justify-content-between">
+          <input class="form-control" type="text" id="newCategoryInput" />
+          <button id="addCategoryBtn" class="btn btn-sm btn-success" disabled>
+            Добавить
+          </button>
+      </div>
         <div id="categoriesWrapper"></div>
       </div>
       <div id="itemsWrapper" class="col">
