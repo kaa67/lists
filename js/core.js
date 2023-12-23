@@ -15,8 +15,8 @@ if (!localStorage.getItem('store')) {
   )
 }
 
-// Глобальное хранилище
-const store = JSON.parse(localStorage.getItem('store'))
+// Получить из стора
+const store = getStore()
 let newCategoryName = ''
 
 // Валидация и корректировка стора
@@ -70,7 +70,10 @@ function categoriesRefresh () {
       store.categories = store.categories.filter (
         (_, indexToDelete) => indexToDelete !== index
       )
+
       store.categoryIndex = store.categories.length - 1
+
+      saveStore()
       refresh()
     }
 
@@ -131,6 +134,7 @@ function addCategory() {
 
   store.categoryIndex = store.categories.length - 1
 
+  saveStore()
   refresh()
 }
 
@@ -145,4 +149,12 @@ newCategoryInput.oninput = (event) => {
   newCategoryName = event.target.value
 
   document.querySelector('#addCategoryBtn').disabled = !newCategoryName
+}
+
+function getStore () {
+  return JSON.parse(localStorage.getItem('store'))
+}
+
+function saveStore () {
+  localStorage.setItem('store', JSON.stringify(store))
 }
