@@ -62,13 +62,17 @@ function categoriesRefresh () {
 
   categories.forEach((category, index) => {
     const li = document.createElement('li')
-    li.classList.add('list-group-item')
+    li.classList.add('list-group-item', 'd-flex', 'justify-content-between')
 
     if (index === categoryIndex) {
       li.classList.add('active')
     }
 
+    const deleteCategotyBtn = document.createElement('button')
+    deleteCategotyBtn.classList.add('btn', 'btn-sm', 'btn-danger')
+    deleteCategotyBtn.innerText = 'Удалить'
     li.textContent = category.title
+    li.appendChild(deleteCategotyBtn)
     ul.appendChild(li)
   })
 
