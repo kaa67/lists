@@ -73,6 +73,10 @@ function categoriesRefresh () {
     deleteCategotyBtn.innerText = 'Удалить'
 
     deleteCategotyBtn.onclick = function() {
+      if (!confirm (`Категория "${category.title} (${index})" будет удалена.\nВы уверены?`)) {
+        return
+      }
+
       store.categories = store.categories.filter (
         (_, indexToDelete) => indexToDelete !== index
       )
@@ -80,7 +84,7 @@ function categoriesRefresh () {
       refresh()
     }
 
-    li.textContent = category.title
+    li.textContent = `${category.title} (${index})`
     li.appendChild(deleteCategotyBtn)
     ul.appendChild(li)
   })
