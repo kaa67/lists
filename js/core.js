@@ -3,17 +3,6 @@
 //   items: string[]
 // }
 
-const categoryItemMOCK = {
-  title: "Оборудование",
-  items: [
-    'Микроскопы',
-    'Пулеметы',
-    'Водомёты',
-    'Коллайдеры',
-    'Лом',
-  ]
-}
-
 const initialStore = {
   categories: [], // Category[]
   categoryIndex: null // null || number
@@ -28,6 +17,7 @@ if (!localStorage.getItem('store')) {
 
 // Глобальное хранилище
 const store = JSON.parse(localStorage.getItem('store'))
+let newCategoryName = ''
 
 // Валидация и корректировка стора
 if (!store?.categories?.length) {
@@ -129,7 +119,16 @@ function itemsRefresh () {
 }
 
 function addCategory() {
-  store.categories.push(categoryItemMOCK)
+  store.categories.push({
+    title: newCategoryName,
+    items: []
+  })
+
+  newCategoryName = ''
+  const newCategoryInput = document.querySelector('#newCategoryInput')
+  newCategoryInput.value = ''
+  document.querySelector('#addCategoryBtn').disabled = true
+
   store.categoryIndex = store.categories.length - 1
 
   refresh()
@@ -139,4 +138,11 @@ function clear(element) {
   while(element.firstElementChild) {
      element.firstElementChild.remove();
   }
+}
+
+const newCategoryInput = document.querySelector('#newCategoryInput')
+newCategoryInput.oninput = (event) => {
+  newCategoryName = event.target.value
+
+  document.querySelector('#addCategoryBtn').disabled = !newCategoryName
 }
