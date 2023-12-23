@@ -71,6 +71,15 @@ function categoriesRefresh () {
     const deleteCategotyBtn = document.createElement('button')
     deleteCategotyBtn.classList.add('btn', 'btn-sm', 'btn-danger')
     deleteCategotyBtn.innerText = 'Удалить'
+
+    deleteCategotyBtn.onclick = function() {
+      store.categories = store.categories.filter (
+        (_, indexToDelete) => indexToDelete !== index
+      )
+      store.categoryIndex = store.categories.length - 1
+      refresh()
+    }
+
     li.textContent = category.title
     li.appendChild(deleteCategotyBtn)
     ul.appendChild(li)
