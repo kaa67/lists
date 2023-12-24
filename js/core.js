@@ -3,18 +3,6 @@
 //   items: string[]
 // }
 
-const initialStore = {
-  categories: [], // Category[]
-  categoryIndex: null // null || number
-}
-
-if (!localStorage.getItem('store')) {
-  localStorage.setItem(
-    'store',
-    JSON.stringify(initialStore)
-  )
-}
-
 // Получить из стора
 const store = getStore()
 let newCategoryName = ''
@@ -151,7 +139,9 @@ newCategoryInput.oninput = (event) => {
 }
 
 function getStore () {
-  return JSON.parse(localStorage.getItem('store'))
+  const storeString = localStorage.getItem('store')
+
+  return !storeString ? {} : JSON.parse(storeString)
 }
 
 function saveStore () {
@@ -162,12 +152,17 @@ function saveStore () {
 function isStoreValid () {
   // Полная валидация всех компонент
   return (
+    typeof store === 'object' &&
     isCategoriesValid() &&
     isCategoryIndexValid()
   );
 }
 
 function storeNormalisation () {
+  if (typeof store !== 'object') {
+    store = {}
+  }
+
   if (!isCategoriesValid()) {
     store.categories = []
     store.categoryIndex = null
