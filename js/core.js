@@ -58,8 +58,7 @@ function categoriesRefresh () {
         (_, indexToDelete) => indexToDelete !== index
       )
 
-      store.categoryIndex = store.categories.length - 1
-
+      store.categoryIndex = null
       saveStore()
       refresh()
     }
