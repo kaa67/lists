@@ -18,6 +18,7 @@ if (!localStorage.getItem('store')) {
 // Получить из стора
 const store = getStore()
 let newCategoryName = ''
+let newItemName = ''
 
 // Валидация и корректировка стора
 if (!store?.categories?.length) {
@@ -77,7 +78,12 @@ function categoriesRefresh () {
       refresh()
     }
 
-    li.textContent = `${category.title} (${index})`
+    li.textContent = category.title + ' '
+
+    const smallSubContent = document.createElement('small')
+    smallSubContent.innerText = JSON.stringify(category.items)
+
+    li.appendChild(smallSubContent)
     li.appendChild(deleteCategotyBtn)
     ul.appendChild(li)
   })
@@ -106,6 +112,42 @@ function itemsRefresh () {
   const h3 = document.createElement('h3')
   h3.innerHTML = title
   wrapper.appendChild(h3)
+
+  const newItemWrapper = document.createElement('div')
+  newItemWrapper.classList.add('d-flex', 'justify-content-between')
+
+  const newItemInput = document.createElement('input')
+  newItemInput.classList.add('form-control')
+  newItemInput.id = 'newItemInput'
+  newItemInput.type = 'text'
+  newItemInput.oninput = (event) => {
+    newItemName = event.target.value
+  
+    document.querySelector('#newItemBtn').disabled = !newItemName
+  }
+
+  const newItemBtn = document.createElement('button')
+  newItemBtn.id = 'newItemBtn'
+  newItemBtn.classList.add('btn', 'btn-sm', 'btn-success')
+  newItemBtn.disabled = true
+  newItemBtn.innerText = 'Добавить'
+  newItemBtn.onclick = () => {
+    const { categories, categoryIndex } = store
+    const { items } = categories[categoryIndex]
+    items.push(newItemName)
+
+    newItemName = ''
+    const newItemInput = document.querySelector('#newItemInput')
+    newItemInput.value = ''
+    document.querySelector('#newItemBtn').disabled = true
+  
+    saveStore()
+    refresh()
+  }
+
+  newItemWrapper.appendChild(newItemInput)
+  newItemWrapper.appendChild(newItemBtn)
+  wrapper.appendChild(newItemWrapper)
 
   const ul = document.createElement('ul')
   ul.classList.add('list-group')
