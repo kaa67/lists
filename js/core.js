@@ -19,10 +19,9 @@ if (!localStorage.getItem('store')) {
 const store = getStore()
 let newCategoryName = ''
 
-// Валидация и корректировка стора
-if (!store?.categories?.length) {
-  store.categories = []
-  store.categoryIndex = null
+if (!isStoreValid()) {
+  storeNormalisation()
+  saveStore()
 }
 
 const addCategoryBtn = document.querySelector('#addCategoryBtn')
@@ -157,4 +156,35 @@ function getStore () {
 
 function saveStore () {
   localStorage.setItem('store', JSON.stringify(store))
+}
+
+// Вернет boolean - признак валидности данных
+function isStoreValid () {
+  // Полная валидация всех компонент
+  return (
+    isCategoriesValid() &&
+    isCategoryIndexValid()
+  );
+}
+
+function storeNormalisation () {
+  if (!isCategoriesValid()) {
+    store.categories = []
+    store.categoryIndex = null
+  }
+
+  if (!isCategoryIndexValid()) {
+    store.categoryIndex = null
+  }
+}
+
+function isCategoriesValid () {
+  // Проверка говно, надо проверять каждый объект массива
+  // (В нашем случае уместно пропустить)
+  return Array.isArray(store?.categories);
+}
+
+function isCategoryIndexValid () {
+  const currentType = typeof store?.categoryIndex
+  return ['null', 'number'].includes(currentType);
 }
