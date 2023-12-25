@@ -1,10 +1,13 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import AddCategory from './components/AddCategory';
+import Reclama from './components/Reclama';
 
 const App = () => (
   <div className="container-fluid">
     <Navbar />
+
+    <Reclama />
 
     <div className="container-fluid">
       <div className="row">
