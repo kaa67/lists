@@ -6,6 +6,9 @@ type Props = {
   deleteByIndex: (index: number) => void;
 };
 
+const liClassName = 'list-group-item d-flex justify-content-between';
+const btnClassName = 'btn btn-sm btn-danger';
+
 function Li (props: Props) {
   const { index, category, deleteByIndex } = props;
 
@@ -14,13 +17,10 @@ function Li (props: Props) {
   };
 
   return (
-    <li className="list-group-item d-flex justify-content-between">
+    <li className={liClassName}>
       {category.title}
 
-      <button
-        onClick={onDelete}
-        className="btn btn-sm btn-danger"
-      >
+      <button onClick={onDelete} className={btnClassName}>
         Удалить
       </button>
     </li>

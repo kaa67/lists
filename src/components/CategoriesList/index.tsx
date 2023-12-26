@@ -1,4 +1,8 @@
+import { ReactNode } from "react";
+
+import Ul from "./Ul";
 import Li from "./Li";
+
 import { Category } from "../../types";
 
 type Props = {
@@ -10,25 +14,42 @@ function CategoriesList (props: Props) {
   const { categories, setCategories } = props;
 
   const deleteByIndex = (indexForDelete: number) => {
-    setCategories(
-      categories.filter(
-        (_, index) => index !== indexForDelete
-      )
+    const newCategories =categories.filter(
+      (_, index) => index !== indexForDelete
     );
+    
+    setCategories(newCategories);
   };
 
+  // OldStyle for old guys
+  //
+  const liList: ReactNode[] = [];
+  categories.forEach((category, index) => {
+    liList.push(
+      <Li key={index}
+        index={index}
+        category={category}
+        deleteByIndex={deleteByIndex}
+      />
+    );
+  });
+
+  // New style for yung champions based on MAP method
+  //
+  // const liList = categories.map(
+  //   (category, index) => (
+  //     <Li key={index}
+  //       index={index}
+  //       category={category}
+  //       deleteByIndex={deleteByIndex}
+  //     />
+  //   )
+  // );
+
   return (
-    <ul className="list-group">
-      {categories.map(
-        (category, index) => (
-          <Li
-            index={index}
-            category={category}
-            deleteByIndex={deleteByIndex}
-          />
-        )
-      )}
-    </ul>
+    <Ul>
+      {liList}
+    </Ul>
   );
 }
 
