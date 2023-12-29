@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const Navbar = () => (
   <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -33,13 +33,9 @@ const Navbar = () => (
             <a className="nav-link disabled" aria-disabled="true" href="/">Disabled</a>
           </li>
         </ul>
-        <form className="d-flex" role="search">
-          <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>
-);
+)
 
-export default Navbar;
+export default Navbar

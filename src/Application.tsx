@@ -1,35 +1,26 @@
-import { useState } from 'react';
-import Navbar from './components/Navbar';
-import AddCategory from './components/AddCategory';
-import { Category } from './types';
-import CategoriesList from './components/CategoriesList';
-import { categoriesMOCK } from './mock';
+import { Col, Container, Row } from 'react-bootstrap'
 
-const Application = () => {
-  const [categories, setCategories] =
-    useState<Category[]>(categoriesMOCK);
+import Navbar from './components/Navbar'
+import CategoriesList from './components/CategoriesList'
+import CategoryEditor from 'components/CategoryEditor'
 
-  return (
-    <div className="container-fluid">
-      <Navbar />
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col">
-            <h1>Категории</h1>
+const Application = () => (
+  <>
+    <Navbar />
 
-            <AddCategory />
+    <Container fluid>
+      <Row>
+        <Col>
+          <h1>Категории</h1>
+          <CategoriesList />
+        </Col>
 
-            <CategoriesList
-              categories={categories}
-              setCategories={setCategories}
-            />
-          </div>
-          <div id="itemsWrapper" className="col">
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+        <Col>
+          <CategoryEditor />
+        </Col>
+      </Row>
+    </Container>
+  </>
+)
 
-export default Application;
+export default Application
